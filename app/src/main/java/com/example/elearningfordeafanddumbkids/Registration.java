@@ -27,7 +27,7 @@ public class Registration extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.registration);
         setupUI();
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +41,7 @@ public class Registration extends AppCompatActivity {
                             if (task.isSuccessful()) {
 
                                 Toast.makeText(Registration.this, "Registration Success", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(Registration.this, Login.class));
+                                startActivity(new Intent(Registration.this, login.class));
                             } else {
                                 Toast.makeText(Registration.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                             }
@@ -54,7 +54,7 @@ public class Registration extends AppCompatActivity {
         userlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Registration.this, Login.class));
+                startActivity(new Intent(Registration.this, login.class));
             }
         });
 

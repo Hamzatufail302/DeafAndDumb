@@ -12,14 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Registration"></activity>
-        <activity android:name=".Login" />
-        <activity android:name=".First" />
+        <activity android:name=".login" />
+        <activity android:name=".kid_doc" />
         <activity android:name=".Sixth" />
-        <activity android:name=".Fifth" />
-        <activity android:name=".Fourth" />
-        <activity android:name=".Third" />
-        <activity android:name=".Second" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".pages" />
+        <activity android:name=".Choose_type" />
+        <activity android:name=".choose_menu" />
+        <activity android:name=".choose_profile" />
+        <activity android:name=".welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

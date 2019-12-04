@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.security.PrivateKey;
-
-public class First extends AppCompatActivity {
+public class kid_doc extends AppCompatActivity {
     private Button button16;
     private Button button17;
 
@@ -17,7 +15,7 @@ public class First extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
+        setContentView(R.layout.kid_doc);
         button16 = (Button) findViewById(R.id.button16);
         button16.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,14 +27,14 @@ public class First extends AppCompatActivity {
         button17.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(First.this, Registration.class));
+                startActivity(new Intent(kid_doc.this, Registration.class));
             }
         });
 
     }
 
     public void Openactivity() {
-        Intent intent = new Intent(this, Third.class);
+        Intent intent = new Intent(this, choose_menu.class);
         startActivity(intent);
 
     }
