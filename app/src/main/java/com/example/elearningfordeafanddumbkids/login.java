@@ -3,6 +3,7 @@ package com.example.elearningfordeafanddumbkids;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,8 @@ public class login extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private Button button;
     private EditText name,password;
+    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +31,14 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.login);
         textView1 = (TextView) findViewById(R.id.textView);
         firebaseAuth=firebaseAuth.getInstance();
+        progressDialog=new ProgressDialog(this);
         button=(Button)findViewById(R.id.button21);
         name=(EditText)findViewById(R.id.lname);
         password=(EditText)findViewById(R.id.lpass);
 
         FirebaseAuth user=FirebaseAuth.getInstance();
-        if(user!=null){
-            finish();
-            startActivity(new Intent(login.this,choose_profile.class));
-        }
+
+
         textView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,10 +58,14 @@ public class login extends AppCompatActivity {
     }
 
     private void validate(String username, String userpass) {
-        firebaseAuth.createUserWithEmailAndPassword(username,userpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        progressDialog.setMessage("please wait");
+        progressDialog.show();
+        firebaseAuth.signInWithEmailAndPassword(username,userpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+
+                    progressDialog.dismiss();
                     Toast.makeText(login.this,"login Success",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(login.this,choose_profile.class));
                 }
