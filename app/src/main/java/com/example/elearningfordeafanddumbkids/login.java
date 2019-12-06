@@ -48,6 +48,7 @@ public class login extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
                 validate(name.getText().toString(),password.getText().toString());
             }
 
