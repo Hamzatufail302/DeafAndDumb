@@ -14,18 +14,14 @@ public class choose_profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_profile);
-        button2= (Button)findViewById(R.id.button2);
+        button2= (Button)findViewById(R.id.kid1);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Openactivity();
+                startActivity(new Intent(choose_profile.this,Kid_registration.class));
             }
         });
     }
 
-    public void  Openactivity(){
-        Intent intent = new  Intent(this , choose_menu.class);
-        startActivity(intent);
 
-    }
 }

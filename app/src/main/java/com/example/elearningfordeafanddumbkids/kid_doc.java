@@ -20,7 +20,7 @@ public class kid_doc extends AppCompatActivity {
         button16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Openactivity();
+                startActivity(new Intent(kid_doc.this,choose_profile.class));
             }
         });
         button17 = (Button) findViewById(R.id.button17);
@@ -33,9 +33,5 @@ public class kid_doc extends AppCompatActivity {
 
     }
 
-    public void Openactivity() {
-        Intent intent = new Intent(this, choose_menu.class);
-        startActivity(intent);
 
-    }
 }
