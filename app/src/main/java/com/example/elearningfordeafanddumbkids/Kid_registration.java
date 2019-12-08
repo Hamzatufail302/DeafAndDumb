@@ -57,7 +57,7 @@ public class Kid_registration extends AppCompatActivity {
         userlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Kid_registration.this, login.class));
+                startActivity(new Intent(Kid_registration.this, Kid_login.class));
             }
         });
 

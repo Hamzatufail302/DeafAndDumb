@@ -17,24 +17,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class login extends AppCompatActivity {
+public class Kid_login extends AppCompatActivity {
     private TextView textView1;
     private FirebaseAuth firebaseAuth;
     private Button button;
     private EditText name,password;
     private ProgressDialog progressDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        textView1 = (TextView) findViewById(R.id.textView);
+        setContentView(R.layout.kid_login);
+        textView1 = (TextView) findViewById(R.id.kidregister);
         firebaseAuth=firebaseAuth.getInstance();
         progressDialog=new ProgressDialog(this);
-        button=(Button)findViewById(R.id.button21);
-        name=(EditText)findViewById(R.id.lname);
-        password=(EditText)findViewById(R.id.lpass);
+        button=(Button)findViewById(R.id.loginkid);
+        name=(EditText)findViewById(R.id.kidusername);
+        password=(EditText)findViewById(R.id.kidpassword);
 
         FirebaseAuth user=FirebaseAuth.getInstance();
 
@@ -42,7 +41,7 @@ public class login extends AppCompatActivity {
         textView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(login.this, Registration.class));
+                startActivity(new Intent(Kid_login.this, Kid_registration.class));
             }
         });
         button.setOnClickListener(new View.OnClickListener() {
@@ -67,11 +66,11 @@ public class login extends AppCompatActivity {
                 if(task.isSuccessful()){
 
                     progressDialog.dismiss();
-                    Toast.makeText(login.this,"login Success",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(login.this,LindexProfile.class));
+                    Toast.makeText(Kid_login.this,"login Success",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Kid_login.this,choose_menu.class));
                 }
                 else{
-                    Toast.makeText(login.this,"login failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Kid_login.this,"login failed",Toast.LENGTH_SHORT).show();
                 }
 
             }
