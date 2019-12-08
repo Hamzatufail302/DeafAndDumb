@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "93709520334-mpj275cu9b166ink1o07dln727etmpr6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.elearningfordeafanddumbkids",
+            "certificate_hash": "d382f6814f2f7433eea57d5ca470398f86b3de43"
+          }
+        },
+        {
           "client_id": "93709520334-sj1b4pcs6t2jsh3mrn7rm8a050q6urt4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
