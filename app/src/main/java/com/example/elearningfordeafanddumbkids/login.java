@@ -22,7 +22,9 @@ public class login extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private Button button;
     private EditText name,password;
+    private String Demail,Dpass;
     private ProgressDialog progressDialog;
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
     @Override
@@ -48,8 +50,11 @@ public class login extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Demail=name.getText().toString();
+                Dpass=password.getText().toString();
 
-                validate(name.getText().toString(),password.getText().toString());
+
+                validate(Demail,Dpass);
             }
 
         });
@@ -61,22 +66,34 @@ public class login extends AppCompatActivity {
     private void validate(String username, String userpass) {
         progressDialog.setMessage("please wait");
         progressDialog.show();
-        firebaseAuth.signInWithEmailAndPassword(username,userpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+        if (Demail.isEmpty() || Dpass.isEmpty()) {
+            progressDialog.dismiss();
+            Toast.makeText(login.this, "Enter all the details corrently", Toast.LENGTH_SHORT).show();
 
-                    progressDialog.dismiss();
-                    Toast.makeText(login.this,"login Success",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(login.this,LindexProfile.class));
+        }
+        else if(!Demail.matches(emailPattern)) {
+            progressDialog.dismiss();
+            Toast.makeText(login.this, "Enter Email correctly", Toast.LENGTH_SHORT).show();
+
+        }
+        else {
+            firebaseAuth.signInWithEmailAndPassword(username, userpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+
+                        progressDialog.dismiss();
+                        Toast.makeText(login.this, "login Success", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(login.this, LindexProfile.class));
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(login.this, "login failed PLease Check all details", Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
-                else{
-                    Toast.makeText(login.this,"login failed",Toast.LENGTH_SHORT).show();
-                }
 
-
-            }
-
-        });
+            });
+        }
     }
 }

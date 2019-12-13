@@ -25,6 +25,7 @@ public class Registration extends AppCompatActivity {
     private Button register;
     private TextView userlogin;
     private FirebaseAuth firebaseAuth = getInstance();
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,13 @@ public class Registration extends AppCompatActivity {
         String Name = name.getText().toString();
         if (Email.isEmpty() || Password.isEmpty() || Name.isEmpty()) {
             Toast.makeText(this, "Please Enter all the details", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else if(!Email.matches(emailPattern)) {
+
+            Toast.makeText(Registration.this, "Enter Email correctly", Toast.LENGTH_SHORT).show();
+
+        }
+        else {
             result = true;
         }
 

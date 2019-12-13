@@ -22,7 +22,9 @@ public class Kid_login extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private Button button;
     private EditText name,password;
+    private String Kemail,Kpass;
     private ProgressDialog progressDialog;
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,11 @@ public class Kid_login extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Kemail=name.getText().toString();
+                Kpass=password.getText().toString();
 
-                validate(name.getText().toString(),password.getText().toString());
+
+                validate(Kemail,Kpass);
             }
 
         });
@@ -60,20 +65,33 @@ public class Kid_login extends AppCompatActivity {
     private void validate(String username, String userpass) {
         progressDialog.setMessage("please wait");
         progressDialog.show();
-        firebaseAuth.signInWithEmailAndPassword(username,userpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+        if (Kemail.isEmpty() || Kpass.isEmpty()) {
+            progressDialog.dismiss();
+            Toast.makeText(Kid_login.this, "Enter Details completely", Toast.LENGTH_SHORT).show();
 
-                    progressDialog.dismiss();
-                    Toast.makeText(Kid_login.this,"login Success",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Kid_login.this,choose_menu.class));
-                }
-                else{
-                    Toast.makeText(Kid_login.this,"login failed",Toast.LENGTH_SHORT).show();
-                }
+        }
+        else if(!Kemail.matches(emailPattern)) {
+            progressDialog.dismiss();
+            Toast.makeText(Kid_login.this, "Enter Email correctly", Toast.LENGTH_SHORT).show();
 
-            }
-        });
+        }
+            else
+         {
+            firebaseAuth.signInWithEmailAndPassword(username, userpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+
+                        progressDialog.dismiss();
+                        Toast.makeText(Kid_login.this, "login Success", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Kid_login.this, choose_menu.class));
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(Kid_login.this, "login failed check your details", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+        }
     }
 }
