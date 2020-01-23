@@ -13,7 +13,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_round"
-
+        android:onClick="Fruit"
 
         android:text="Fruit"
         app:layout_constraintBottom_toTopOf="@+id/button11"

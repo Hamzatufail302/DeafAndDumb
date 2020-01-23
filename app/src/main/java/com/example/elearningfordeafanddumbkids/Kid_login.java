@@ -53,7 +53,9 @@ public class Kid_login extends AppCompatActivity {
                 Kpass=password.getText().toString();
 
 
-                validate(Kemail,Kpass);
+               // validate(Kemail,Kpass);
+
+                startActivity(new Intent(Kid_login.this,Choose_type.class));
             }
 
         });
