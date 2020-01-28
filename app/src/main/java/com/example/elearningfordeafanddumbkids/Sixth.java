@@ -3,10 +3,13 @@ package com.example.elearningfordeafanddumbkids;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -37,20 +40,47 @@ public class Sixth extends AppCompatActivity {
     StorageReference reference;
     private List myVideos;
     private VideoView videoView;
-    Uri videouri;
-
+    private ImageView imageView;
+    //Uri iamgeuri;
+    //Uri videouri;
+    String [] img_names={"Apple","Banana","Mango"};
     int index=0;
     String [] vid_names={"Apple","Banana","Mango"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sixth);
-
+        imageView= findViewById(R.id.my_img);
         myVideos=new ArrayList();
         databaseReference= FirebaseDatabase.getInstance().getReference("videos");
-        videoView=(VideoView)findViewById(R.id.my_vid);
-
+        videoView=(VideoView)findViewById(R.id.vid);
+        imageload(index);
         multiple(index);
+
+    }
+    public void imageload(int index){
+
+        FirebaseStorage storage=FirebaseStorage.getInstance();
+        StorageReference storageReference =storage.getReference("fruitimg").child(img_names[index]+".png");
+        try {
+            final File localFile=File.createTempFile(img_names[index],"png");
+            storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Bitmap bitmap= BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                   imageView.setImageBitmap(bitmap);
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                   Toast.makeText(Sixth.this,"Failed to load",Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -95,5 +125,6 @@ public class Sixth extends AppCompatActivity {
             index=0;
         }
         multiple(index);
+        imageload(index);
     }
 }

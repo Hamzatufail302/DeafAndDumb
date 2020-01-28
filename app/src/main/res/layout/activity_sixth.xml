@@ -17,7 +17,7 @@
 
 
         <VideoView
-            android:id="@+id/my_vid"
+            android:id="@+id/vid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
@@ -43,6 +43,7 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/button_img"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:textColor="#2840a4"
