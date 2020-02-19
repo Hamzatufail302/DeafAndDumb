@@ -3,6 +3,7 @@ package com.example.elearningfordeafanddumbkids;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -43,9 +44,10 @@ public class Sixth extends AppCompatActivity {
     private ImageView imageView;
     //Uri iamgeuri;
     //Uri videouri;
-    String [] img_names={"Apple","Banana","Mango"};
+    String [] img_names;
     int index=0;
-    String [] vid_names={"Apple","Banana","Mango"};
+    ProgressDialog progressDialog;
+    String [] vid_names;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +56,16 @@ public class Sixth extends AppCompatActivity {
         myVideos=new ArrayList();
         databaseReference= FirebaseDatabase.getInstance().getReference("videos");
         videoView=(VideoView)findViewById(R.id.vid);
+        progressDialog=new ProgressDialog(Sixth.this);
+        img_names=getIntent().getStringArrayExtra("images");
+        vid_names=getIntent().getStringArrayExtra("videos");
         imageload(index);
         multiple(index);
 
     }
     public void imageload(int index){
-
         FirebaseStorage storage=FirebaseStorage.getInstance();
-        StorageReference storageReference =storage.getReference("fruitimg").child(img_names[index]+".png");
+        StorageReference storageReference =storage.getReference("images").child("fruits").child(img_names[index]+".png");
         try {
             final File localFile=File.createTempFile(img_names[index],"png");
             storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -86,10 +90,14 @@ public class Sixth extends AppCompatActivity {
 
     public void multiple(int index){
 
+        progressDialog.setTitle("Please Wait");
+        progressDialog.setMessage("Loading Video/Image...");
+        progressDialog.show();
+
         StorageReference storageReference= FirebaseStorage.getInstance().getReference();
    //     reference=storageReference.child("/videos/Apple.mp4");
 
-        reference=storageReference.child("/videos/"+vid_names[index]+".mp4");
+        reference=storageReference.child("videos").child("fruits/"+vid_names[index]+".mp4");
 
 
         try {
@@ -99,6 +107,7 @@ public class Sixth extends AppCompatActivity {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     videoView.setVideoURI(Uri.fromFile(localFile));
                     videoView.start();
+                    progressDialog.dismiss();
 
                     videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
@@ -127,4 +136,5 @@ public class Sixth extends AppCompatActivity {
         multiple(index);
         imageload(index);
     }
+
 }

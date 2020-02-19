@@ -166,6 +166,7 @@ public class Kid_registration extends AppCompatActivity {
         }
         else if (userimage.getDrawable() == null){
             Toast.makeText(this, "Please upload image", Toast.LENGTH_SHORT).show();
+           // userimage.setImageDrawable(R.drawable.ic_launcher_background);
 
         }
         else {
