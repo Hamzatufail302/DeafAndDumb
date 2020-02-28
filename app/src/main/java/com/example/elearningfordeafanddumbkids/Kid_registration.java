@@ -60,16 +60,20 @@ public class Kid_registration extends AppCompatActivity {
             ImagePath = data.getData();
 
 
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), ImagePath);
-                userimage.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
 
 
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void uploadimage(View view){
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), ImagePath);
+            userimage.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
