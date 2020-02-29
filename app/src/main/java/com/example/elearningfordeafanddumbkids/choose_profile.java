@@ -24,4 +24,7 @@ public class choose_profile extends AppCompatActivity {
     }
 
 
+    public void Addextra(View view) {
+        startActivity(new Intent(choose_profile.this,Monitor.class));
+    }
 }

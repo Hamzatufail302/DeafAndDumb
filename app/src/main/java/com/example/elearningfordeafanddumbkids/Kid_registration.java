@@ -59,10 +59,6 @@ public class Kid_registration extends AppCompatActivity {
         if (requestCode == Pick_image && resultCode == RESULT_OK && data.getData() != null) {
             ImagePath = data.getData();
 
-
-
-
-
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
