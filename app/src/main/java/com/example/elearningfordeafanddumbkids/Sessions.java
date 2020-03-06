@@ -4,18 +4,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Sessions {
-     String Username;
+     static String Username;
 
     String Password;
     String Type;
     Context context;
 
-    static SharedPreferences sharedPreferences;
+     SharedPreferences sharedPreferences;
     public Sessions(Context context) {
         this.context=context;
         sharedPreferences=context.getSharedPreferences("session",Context.MODE_PRIVATE);
     }
-    public static String getUsername() {
+    public  String getUsername() {
         Username=sharedPreferences.getString("username","");
         return Username;
     }

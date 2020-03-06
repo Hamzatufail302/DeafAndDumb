@@ -23,6 +23,10 @@ public class Splash extends AppCompatActivity {
                        if(sessions.getType().equals("kid")){
                            startActivity(new Intent(getApplicationContext(),choose_menu.class));
                        }
+                       else{
+                           startActivity(new Intent(getApplicationContext(),welcome.class));
+
+                       }
                    }
                    else{
                        startActivity(new Intent(getApplicationContext(),welcome.class));
