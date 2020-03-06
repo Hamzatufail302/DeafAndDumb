@@ -4,14 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.se.omapi.Session;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -23,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Monitor extends AppCompatActivity {
     private static final int PICK_VIDEO_REQUEST=3;
@@ -33,6 +39,10 @@ public class Monitor extends AppCompatActivity {
     public MediaController mediaController;
     private StorageReference storageReference;
     Uri videouri;
+    String VideoName;
+    ArrayList<String> videos_Name=new ArrayList<>();
+    String[] vidNames={"0","0","0","0","0","0","0","0","0","0"};
+
 //private  String videoname;
 
 
@@ -61,10 +71,16 @@ public class Monitor extends AppCompatActivity {
         vv.start();
     }
     public void Upload(View view){
-
+        String Username="";
+           Sessions session=new Sessions(getApplicationContext());
+           Username=Sessions.getUsername();
         sendUserData();
+        AlertBox();
+
+        videos_Name.add(VideoName);
         if(videouri!=null){
-            StorageReference riversRef = storageReference.child("/test/test.mp4");
+            //   StorageReference riversRef = storageReference.child("/test/"+VideoName+".mp4");
+            StorageReference riversRef = storageReference.child("/"+Username+"/"+VideoName+".mp4");
             UploadTask uploadTask=riversRef.putFile(videouri);
 
             uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -75,7 +91,7 @@ public class Monitor extends AppCompatActivity {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(Monitor.this, "Upload Sucesfull", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Monitor.this, "Upload Sucessfull", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -89,7 +105,7 @@ public class Monitor extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       if()
+
         if (requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK && data.getData() != null) {
             videouri = data.getData();
             vv.setVideoURI(videouri);
@@ -146,5 +162,34 @@ public class Monitor extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void AlertBox(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Monitor.this);
+        alertDialog.setTitle("Video Name");
+        alertDialog.setMessage("Enter Desired Video Name");
+
+        final EditText input = new EditText(Monitor.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alertDialog.setView(input);
+        alertDialog.setPositiveButton("Submit",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        VideoName = input.getText().toString();
+                    }
+                });
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }
+        );
+        alertDialog.show();
+
     }
 }

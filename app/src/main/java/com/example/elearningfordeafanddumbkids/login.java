@@ -63,7 +63,7 @@ public class login extends AppCompatActivity {
 
     }
 
-    private void validate(String username, String userpass) {
+    private void validate(final String username, final String userpass) {
         progressDialog.setMessage("please wait");
         progressDialog.show();
         if (Demail.isEmpty() || Dpass.isEmpty()) {
@@ -84,6 +84,9 @@ public class login extends AppCompatActivity {
 
                         progressDialog.dismiss();
                         Toast.makeText(login.this, "login Success", Toast.LENGTH_SHORT).show();
+                        Sessions sessions=new Sessions(getApplicationContext());
+                        sessions.setUsername(username);
+                        sessions.setPassword(userpass);
                         startActivity(new Intent(login.this, LindexProfile.class));
                     } else {
                         progressDialog.dismiss();

@@ -64,7 +64,7 @@ public class Kid_login extends AppCompatActivity {
 
     }
 
-    private void validate(String username, String userpass) {
+    private void validate(final String username, final String userpass) {
         progressDialog.setMessage("please wait");
         progressDialog.show();
         if (Kemail.isEmpty() || Kpass.isEmpty()) {
@@ -86,6 +86,10 @@ public class Kid_login extends AppCompatActivity {
 
                         progressDialog.dismiss();
                         Toast.makeText(Kid_login.this, "login Success", Toast.LENGTH_SHORT).show();
+                        Sessions sessions=new Sessions(getApplicationContext());
+                        sessions.setUsername(username);
+                        sessions.setPassword(userpass);
+                        sessions.setType("kid");
                         startActivity(new Intent(Kid_login.this, choose_menu.class));
                     } else {
                         progressDialog.dismiss();
@@ -96,4 +100,6 @@ public class Kid_login extends AppCompatActivity {
             });
         }
     }
+    //Session session=new Session(activity.this);
+    //session.removeSession();
 }
