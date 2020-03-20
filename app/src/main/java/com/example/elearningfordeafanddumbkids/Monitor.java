@@ -74,34 +74,8 @@ public class Monitor extends AppCompatActivity {
         vv.start();
     }
     public void Upload(View view){
-        String Username="";
-           Sessions session=new Sessions(getApplicationContext());
-           Username=Sessions.getUsername();
-        sendUserData();
-        AlertBox();
 
-        videos_Name.add(VideoName);
-        if(videouri!=null){
-            //   StorageReference riversRef = storageReference.child("/test/"+VideoName+".mp4");
-            StorageReference riversRef = storageReference.child("/"+Username+"/"+VideoName+".mp4");
-            UploadTask uploadTask=riversRef.putFile(videouri);
-
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Monitor.this, "Upload Failed :"+e, Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(Monitor.this, "Upload Sucessfull", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        else{
-            Toast.makeText(this,"Video is empty ",Toast.LENGTH_LONG).show();
-        }
-
+    AlertBox();
     }
 
     @Override
@@ -136,17 +110,18 @@ public class Monitor extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Image"), Pick_image);
-    }
-
-
-
-    public void uploadimage(View view){
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), ImagePath);
             extraimage.setImageBitmap(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public void uploadimage(View view){
+
 
     }
 
@@ -169,7 +144,7 @@ public class Monitor extends AppCompatActivity {
 
     public void AlertBox(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Monitor.this);
-        alertDialog.setTitle("Video Name");
+        alertDialog.setTitle("Name");
         alertDialog.setMessage("Enter Desired Video Name");
 
         final EditText input = new EditText(Monitor.this);
@@ -181,7 +156,8 @@ public class Monitor extends AppCompatActivity {
         alertDialog.setPositiveButton("Submit",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        VideoName = input.getText().toString();
+                      String  Name = input.getText().toString();
+                      myupload(Name);
                     }
                 });
         alertDialog.setNegativeButton("Cancel",
@@ -194,5 +170,36 @@ public class Monitor extends AppCompatActivity {
         );
         alertDialog.show();
 
+
+
+    }
+    public void myupload(String name){
+        String Username="hamza12@gmail.com";
+        Sessions session=new Sessions(Monitor.this);
+        //    Username=session.getUsername();
+        sendUserData();
+     //   String name= AlertBox();
+        Toast.makeText(this, name, Toast.LENGTH_LONG).show();
+        videos_Name.add(name);
+        if(videouri!=null){
+            //   StorageReference riversRef = storageReference.child("/test/"+VideoName+".mp4");
+            StorageReference riversRef = storageReference.child("/"+Username+"/"+name+".mp4");
+            UploadTask uploadTask=riversRef.putFile(videouri);
+
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Monitor.this, "Upload Failed :"+e, Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(Monitor.this, "Upload Sucessfull", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            Toast.makeText(this,"Video is empty ",Toast.LENGTH_LONG).show();
+        }
     }
 }
